@@ -5,8 +5,11 @@
   "modules-left": [
     "hyprland/workspaces",
     "custom/randwall",
-    "custom/player_icon",
-    "custom/spotify"
+    "custom/player_icon", 
+    "memory",
+    "cpu",
+    "temperature",
+    "custom/rofi"
   ],
   "modules-center": [
     "custom/power"
@@ -14,14 +17,28 @@
   "modules-right": [
     "tray",
     "hyprland/language",
-    "custom/cpu_icon",
-    "cpu",
     "network",
     "pulseaudio",
     "battery",
     "clock"
   ],
+
   // Modules configuration
+  "hyprland/window": {
+    "max-length": 60,
+    "format": " {}",
+    "rewrite": {
+  " ":" workspapce" 
+  },
+    "separate-outputs": true
+},
+
+   "custom/rofi": {
+        "format": "󰯉",
+        "tooltip": false,
+        "on-click": "sleep 0.1 && bash $HOME/.config/rofi/launchers/type-3/launcher.sh"
+},
+
   "clock": {
     "format": "{:%H:%M}",
     "tooltip": "true",
@@ -38,35 +55,44 @@
       "3": [],
       "4": []
     },
+
     "format-icons": {
-      "1": "Ⅰ",
-      "2": "Ⅱ",
-      "3": "Ⅲ",
-      "4": "Ⅳ"
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4"
     }
   },
-  "custom/power": {
+
+    "custom/power": {
     "format": "POWER_OFF",
     "on-click": "systemctl poweroff",
     "tooltip": "power off..."
     },
 
-  "cpu": {
-    "interval": 1,
-    "format": "{usage:>2}%"
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": true
+    },
+
+    "memory": {
+        "format": "  {}%"
   },
-  "custom/spotify": {
-    "format": "{}",
-    "max-length": 40,
-    "tooltip": true,
-    "tooltip-format": "{}",
-    "exec": "~/.config/waybar/bin/playerinfo",
-    "return-type": "string",
-    "restart-interval": 1,
-    "on-click": "playerctl -p spotify play-pause",
-    "on-scroll-up": "playerctl -p spotify next",
-    "on-scroll-down": "playerctl -p spotify previous"
-  },
+
+    "temperature": {
+        "interval": 30,
+        "critical-threshold": 80,
+        "format-critical": "  {temperatureC}°C",
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": [
+          "<span foreground='#32302F'></span>",
+          "<span foreground='#32302F'></span>",
+          "<span foreground='#32302F'></span>",
+          "<span foreground='#32302F'></span>"
+        ],
+        "max-length": 7,
+        "min-length": 7
+    },
 
   "battery": {
     "states": {
@@ -77,21 +103,19 @@
     "format": "BAT:  {capacity}%",
     "format-charging": "CHARGING: {capacity}%",
     "format-plugged": "CONNECTED: {capacity}%",
-    "format-alt": "BAT: {time}",
-    // "format-good": "", // An empty format will hide the module
-    // "format-full": "",
-    "format-icons": ["", "", "", "", ""]
+    "format-alt": "BAT: {time}"
   },
 
   "network": {
     "format-wifi": "{essid}",
-    "format-ethernet": " {ifname}",
-    "format-linked": " {ifname} (No IP)",
+    "format-ethernet": "󰈀  {ifname}",
+    "format-linked": "󰈀  {ifname} (No IP)",
     "format-disconnected": "DISCONNECTED",
-    "format-alt": " {ifname}: {ipaddr}/{cidr}",
+    "format-alt": " 󰈀  {ifname}: {ipaddr}/{cidr}",
     "tooltip-format": "{essid}",
     "on-click-right": "nm-connection-editor"
   },
+
   "hyprland/language": {
     "format": "{short}",
     "keyboard-name": "at-translated-set-2-keyboard"
@@ -103,11 +127,8 @@
   },
 
   "backlight": {
-    // "device": "acpi_video1",
     "format": "BRT: {percent}%",
-    "format-icons": ["", "", "", "", "", "", "", "", ""]
-    //	"on-scroll-up":,
-    //	"on-scroll-down":,
+    //"format-icons": ["", "", "", "", "", "", "", "", ""]
   },
 
   "pulseaudio": {
@@ -116,16 +137,15 @@
     "format-icons": {
       "default": ["󰕿", "󰖀", "󰕾"]
     },
+
     "on-click": "pamixer -t",
     "on-click-right": "pavucontrol",
     "tooltip-format": "{volume}%"
   },
+
   "custom/randwall": {
     "format": "WALL",
     "on-click": "bash $HOME/.config/hypr/randwall.sh",
     "on-click-right": "bash $HOME/.config/hypr/wall.sh"
-  },
-  "custom/cpu_icon": {
-    "format": " "
   }
 }
